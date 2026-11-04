@@ -71,6 +71,11 @@
 .td-dim { opacity: .35; }
 .td-input, .td-filters select, .td-btn, .td-chip, .td-table, .td-tip { font-family: "Be Vietnam Pro", "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; }
 .td-cmp td { vertical-align: top; }
+.td-cmp td.td-cell { min-width: 10rem; white-space: normal; }
+.td-cell-top { display: flex; align-items: center; gap: 6px; }
+.td-cell-list { margin-top: 3px; color: var(--color-fg-muted); line-height: 1.45; }
+.td-cmp tr.td-total td { background: color-mix(in srgb, var(--color-fg) 4%, transparent); }
+.td-cmp tr.td-hl td { background: color-mix(in srgb, var(--color-warn) 12%, transparent); }
 .td-cmp td.td-list { min-width: 10rem; white-space: normal; color: var(--color-fg-muted); }
 .td-bar-cell { display: flex; align-items: center; gap: var(--cds-gap-xs); justify-content: flex-end; }
 .td-mini { height: .5rem; border-radius: 2px; flex: none; }
@@ -94,7 +99,7 @@
 // Mini runtime: loads the CSV files, computes, and redraws when filters change.
 window.dash = (() => {
   const DATASETS = { shops: 'data/shops.csv', items: 'data/items.csv' };
-  const DEFAULTS = { area: 'all', chain: 'all', brand: 'all', shop: null, q: '' };
+  const DEFAULTS = { area: 'all', chain: 'all', brand: 'all', ptype: 'all', shop: null, q: '' };
   const store = {}, calcs = {}, draws = {}, onDataCbs = [];
   let params = { ...DEFAULTS }, frame = 0;
   const colors = ['#2f6fdb', '#f2762e', '#14a88a', '#e8a317', '#e2729f', '#7b61c9', '#5a9bd4', '#8a8a85'];
@@ -148,6 +153,7 @@ window.dash = (() => {
     <div class="td-filters td-bar">
       <label>Khu vực <select data-draw="f_area" data-source="shops" aria-label="Khu vực"></select></label>
       <label>Chuỗi <select data-draw="f_chain" data-source="shops" aria-label="Chuỗi"></select></label>
+      <label>Loại SP <select class="td-ptype" aria-label="Loại sản phẩm"><option value="all">Tất cả loại</option><option value="Phone">Phone</option><option value="Tablet">Tablet</option><option value="Audio">Audio</option><option value="Watch">Watch</option><option value="Other">Other</option></select></label>
       <label>Hãng <select data-draw="f_brand" data-source="items" aria-label="Hãng"></select></label>
       <button class="td-btn td-reset" type="button">Đặt lại bộ lọc</button>
       <span class="td-updated">Lần check gần nhất: <span data-draw="last" data-source="kpi" data-field="last_checked">—</span></span>
@@ -203,7 +209,7 @@ window.dash = (() => {
       <div class="td-sub"><span data-draw="t_bunits" data-brand="Honor" data-source="kpi" data-field="demo_units">—</span> máy · <span data-draw="t_binv" data-brand="Honor" data-source="kpi" data-field="invest_shops">—</span> CH có đầu tư</div>
     </div>
   </section>
-  <p class="td-def">Độ phủ demo = số cửa hàng có ít nhất 1 máy demo của hãng ÷ số cửa hàng đã check trong phạm vi đang lọc. “CH có đầu tư” = cửa hàng có hạng mục đầu tư (tủ, bàn, tranh tường, logo…) của hãng. Chuỗi được suy ra từ tên shop trong báo cáo.</p>
+  <p class="td-def">Độ phủ demo = số cửa hàng có ít nhất 1 máy demo của hãng ÷ số cửa hàng đã check trong phạm vi đang lọc. “CH có đầu tư” = cửa hàng có hạng mục đầu tư (tủ, bàn, tranh tường, logo…) của hãng. Chuỗi được suy ra từ tên shop trong báo cáo. Loại sản phẩm suy ra từ tên model: Tab/Pad = Tablet; Buds/Enco/Air = Audio; Watch/Band/Fit = Watch; Bubble = Other; còn lại = Phone.</p>
 
   <h2 class="td-sec">OPPO so với đối thủ theo khu vực và chuỗi</h2>
   <section class="td-grid" id="bieu-do">
@@ -211,7 +217,7 @@ window.dash = (() => {
       <h2 class="td-h2">Độ phủ demo theo khu vực</h2>
       <p class="td-note">Tỷ lệ cửa hàng có máy demo của từng hãng, theo chuỗi đang lọc; ô càng đậm càng phủ rộng. Cột cuối là độ phủ OPPO trừ độ phủ của đối thủ mạnh nhất tại khu vực đó: số âm (đỏ) là OPPO đang thua. Bấm vào một khu vực để lọc cả trang.</p>
       <div class="td-scroll">
-        <table class="td-table td-heat" data-source="area_matrix" data-row-key="chain,area">
+        <table class="td-table td-heat" data-source="area_matrix" data-row-key="chain,area,ptype">
           <thead><tr>
             <th data-field="area">Khu vực</th>
             <th data-field="shops" class="td-num">CH đã check</th>
@@ -263,7 +269,7 @@ window.dash = (() => {
     <p class="td-note">Số máy demo của từng hãng và hạng mục đầu tư của đối thủ tại mỗi cửa hàng, xếp theo số máy demo đối thủ (hoặc của hãng đang chọn; khi chọn hãng, chỉ hiện cửa hàng có hạng mục của hãng đó). Hiện tối đa <span data-draw="cap">—</span> cửa hàng; dùng ô tìm kiếm để tìm cửa hàng cụ thể. Bấm vào một dòng để xem chi tiết.</p>
     <div class="td-tablebar"><input class="td-search" type="search" placeholder="Tìm tên shop, mã shop, nhân viên…" aria-label="Tìm cửa hàng"></div>
     <div class="td-scroll">
-      <table class="td-table td-stores" data-source="shop_matrix" data-row-key="shop_id">
+      <table class="td-table td-stores" data-source="shop_matrix" data-row-key="shop_id,ptype">
         <thead><tr>
           <th data-field="shop_name">Cửa hàng</th>
           <th data-field="area" class="td-hide-narrow">Khu vực</th>
@@ -284,19 +290,18 @@ window.dash = (() => {
 
   <section class="td-card" id="chi-tiet">
     <h2 class="td-h2">So sánh các hãng tại một cửa hàng</h2>
-    <p class="td-note">So sánh từng hãng tại cửa hàng đang chọn: số máy demo (thanh dài nhất = hãng bày nhiều nhất), chênh lệch so với OPPO, danh sách model, hạng mục đầu tư và POSM (×n là số lượng).</p>
+    <p class="td-note">Mỗi cột là một hãng, mỗi dòng là một nhóm: Phone, Tablet, Audio, Watch, Other, rồi đầu tư và POSM. Số đỏ/xanh cạnh số máy là chênh lệch so với OPPO (đỏ = đối thủ bày nhiều hơn). ×n là số lượng.</p>
     <div class="td-tablebar"><button class="td-chip" type="button" hidden>Cửa hàng: <span data-draw="sel_shop" data-source="shop_matrix" data-field="shop_name">—</span> ✕</button></div>
     <p class="td-empty td-detail-hint">Bấm vào một cửa hàng ở bảng trên để xem so sánh.</p>
     <div class="td-scroll td-detail-box" hidden>
-      <table class="td-table td-cmp" data-source="shop_compare" data-row-key="shop_id,brand">
+      <table class="td-table td-cmp" data-source="shop_compare" data-row-key="shop_id,kind">
         <thead><tr>
-          <th data-field="brand">Hãng</th>
-          <th data-field="demo_units" class="td-num">Máy demo</th>
-          <th data-field="demo_vs_oppo" class="td-num">So với OPPO</th>
-          <th data-field="demo_models" class="td-num">Số model</th>
-          <th data-field="models">Model demo</th>
-          <th data-field="invest">Hạng mục đầu tư</th>
-          <th data-field="posm">POSM</th>
+          <th data-field="kind">Nhóm</th>
+          <th data-field="u_oppo">OPPO</th>
+          <th data-field="u_samsung">Samsung</th>
+          <th data-field="u_xiaomi">Xiaomi</th>
+          <th data-field="u_vivo">Vivo</th>
+          <th data-field="u_honor">Honor</th>
         </tr></thead>
         <tbody data-draw="detail_body"></tbody>
       </table>
@@ -310,7 +315,7 @@ window.TD = (() => {
   const RIVALS = ['Samsung', 'Xiaomi', 'Vivo', 'Honor'];
   const color = (b) => dash.colors[BRANDS.indexOf(b)] || dash.colors[7];
   const enc = (s) => String(s).replace(/%/g, '%25').replace(/&/g, '%26').replace(/=/g, '%3D').replace(/,/g, '%2C');
-  const scope = () => { const p = dash.params(); return { area: p.area || 'all', chain: p.chain || 'all', brand: p.brand || 'all', shop: p.shop ? String(p.shop) : null, q: p.q || '' }; };
+  const scope = () => { const p = dash.params(); return { area: p.area || 'all', chain: p.chain || 'all', brand: p.brand || 'all', ptype: p.ptype || 'all', shop: p.shop ? String(p.shop) : null, q: p.q || '' }; };
   const inScope = (r, s) => (s.area === 'all' || r.area === s.area) && (s.chain === 'all' || r.chain === s.chain);
   const num = d3.format(',');
   const pct = d3.format('.1%');
@@ -349,24 +354,27 @@ window.TD = (() => {
 <script>(() => {
 dash.calc('kpi', {
   title: 'Độ phủ demo theo hãng',
-  description: 'Theo khu vực và chuỗi (all = tất cả): units_vs_oppo = số máy demo của hãng ÷ của OPPO; với brand all, demo_shops là cửa hàng có demo của bất kỳ hãng nào và no_demo_shops là cửa hàng chưa có dòng demo nào. Số cửa hàng đã check, số cửa hàng có demo, độ phủ, số máy demo, số model, số cửa hàng có đầu tư và POSM của từng hãng; "Đối thủ" gộp Samsung, Xiaomi, Vivo, Honor. Chỉ tính hạng mục có số lượng > 0.',
+  description: 'Theo khu vực, chuỗi và loại sản phẩm (ptype: Phone/Tablet/Audio/Watch, all = tất cả; loại suy ra từ tên model): số cửa hàng đã check, số cửa hàng có demo, độ phủ, số máy demo, số model, units_vs_oppo = số máy của hãng ÷ của OPPO; số cửa hàng có đầu tư và POSM (không phụ thuộc loại sản phẩm). Brand all: demo_shops là cửa hàng có demo của bất kỳ hãng nào, no_demo_shops là cửa hàng chưa có. "Đối thủ" gộp Samsung, Xiaomi, Vivo, Honor. Chỉ tính số lượng > 0.',
   inputs: ['shops', 'items'],
   fn: (shops, items) => {
     const brands = ['OPPO', 'Samsung', 'Xiaomi', 'Vivo', 'Honor'];
+    const PT = ['all', 'Phone', 'Tablet', 'Audio', 'Watch', 'Other'];
+    const ptypeOf = (x) => (/^Bubble$/i.test(x.trim()) ? 'Other' : /\bTab\b|\bPad\b/.test(x) ? 'Tablet' : /Buds?\d*|Enco|\bAir\d/.test(x) ? 'Audio' : /Watch|Band|\bFit\d/.test(x) ? 'Watch' : 'Phone');
     const info = new Map(shops.map((s) => [String(s.shop_id), s]));
     const keys = (s) => [['all', 'all'], [s.area, 'all'], ['all', s.chain], [s.area, s.chain]];
     const acc = new Map();
-    const group = (area, chain) => { const k = area + '|' + chain; if (!acc.has(k)) acc.set(k, { area, chain, shops: new Set(), last: '', b: {} }); return acc.get(k); };
+    const group = (area, chain, ptype) => { const k = area + '|' + chain + '|' + ptype; if (!acc.has(k)) acc.set(k, { area, chain, ptype, shops: new Set(), last: '', b: {} }); return acc.get(k); };
     const slot = (g, brand) => g.b[brand] || (g.b[brand] = { demo: new Set(), units: 0, models: new Set(), invest: new Set(), posm: new Set() });
-    for (const s of shops) for (const [a, c] of keys(s)) { const g = group(a, c); g.shops.add(String(s.shop_id)); if (s.checked_at > g.last) g.last = s.checked_at; }
+    for (const s of shops) for (const [a, c] of keys(s)) for (const pt of PT) { const g = group(a, c, pt); g.shops.add(String(s.shop_id)); if (s.checked_at > g.last) g.last = s.checked_at; }
     for (const r of items) {
       const id = String(r.shop_id), s = info.get(id), q = Number(r.qty);
       if (!s || !(q > 0)) continue;
-      for (const [a, c] of keys(s)) {
-        const g = group(a, c);
+      const demo = r.category === 'Demo', pts = demo ? ['all', ptypeOf(r.item)] : PT;
+      for (const [a, c] of keys(s)) for (const pt of pts) {
+        const g = group(a, c, pt);
         for (const b of r.brand === 'OPPO' ? ['OPPO', 'all'] : [r.brand, 'Đối thủ', 'all']) {
           const x = slot(g, b);
-          if (r.category === 'Demo') { x.demo.add(id); x.units += q; x.models.add(r.item); }
+          if (demo) { x.demo.add(id); x.units += q; x.models.add(r.item); }
           else if (r.category === 'POSM') x.posm.add(id);
           else x.invest.add(id);
         }
@@ -377,7 +385,7 @@ dash.calc('kpi', {
       const n = g.shops.size, oppoUnits = g.b.OPPO ? g.b.OPPO.units : 0;
       for (const brand of ['all', 'Đối thủ', ...brands]) {
         const x = g.b[brand], d = x ? x.demo.size : 0;
-        out.push({ area: g.area, chain: g.chain, brand, shops: n, demo_shops: x ? x.demo.size : 0, coverage: n ? (x ? x.demo.size : 0) / n : null,
+        out.push({ area: g.area, chain: g.chain, ptype: g.ptype, brand, shops: n, demo_shops: d, coverage: n ? d / n : null,
           demo_units: x ? x.units : 0, models: x ? x.models.size : 0, invest_shops: x ? x.invest.size : 0, posm_shops: x ? x.posm.size : 0, last_checked: g.last,
           units_vs_oppo: oppoUnits ? (x ? x.units : 0) / oppoUnits : null, no_demo_shops: n - d, no_demo_share: n ? (n - d) / n : null });
       }
@@ -388,22 +396,24 @@ dash.calc('kpi', {
 
 dash.calc('area_matrix', {
   title: 'Độ phủ demo theo khu vực',
-  description: 'Mỗi khu vực, theo chuỗi (all = tất cả): số cửa hàng đã check, tỷ lệ cửa hàng có máy demo của từng hãng, đối thủ có độ phủ cao nhất và oppo_vs_best = độ phủ OPPO − độ phủ đối thủ đó.',
+  description: 'Mỗi khu vực, theo chuỗi và loại sản phẩm (all = tất cả): số cửa hàng đã check, tỷ lệ cửa hàng có máy demo của từng hãng, đối thủ có độ phủ cao nhất và oppo_vs_best = độ phủ OPPO − độ phủ đối thủ đó.',
   inputs: ['shops', 'items'],
   fn: (shops, items) => {
+    const PT = ['all', 'Phone', 'Tablet', 'Audio', 'Watch', 'Other'];
+    const ptypeOf = (x) => (/^Bubble$/i.test(x.trim()) ? 'Other' : /\bTab\b|\bPad\b/.test(x) ? 'Tablet' : /Buds?\d*|Enco|\bAir\d/.test(x) ? 'Audio' : /Watch|Band|\bFit\d/.test(x) ? 'Watch' : 'Phone');
     const info = new Map(shops.map((s) => [String(s.shop_id), s]));
     const acc = new Map();
-    const group = (chain, area) => { const k = chain + '|' + area; if (!acc.has(k)) acc.set(k, { chain, area, shops: new Set(), b: {} }); return acc.get(k); };
-    for (const s of shops) for (const c of ['all', s.chain]) group(c, s.area).shops.add(String(s.shop_id));
+    const group = (chain, area, ptype) => { const k = chain + '|' + area + '|' + ptype; if (!acc.has(k)) acc.set(k, { chain, area, ptype, shops: new Set(), b: {} }); return acc.get(k); };
+    for (const s of shops) for (const c of ['all', s.chain]) for (const pt of PT) group(c, s.area, pt).shops.add(String(s.shop_id));
     for (const r of items) {
       const id = String(r.shop_id), s = info.get(id);
       if (!s || r.category !== 'Demo' || !(Number(r.qty) > 0)) continue;
-      for (const c of ['all', s.chain]) { const g = group(c, s.area); (g.b[r.brand] || (g.b[r.brand] = new Set())).add(id); }
+      for (const c of ['all', s.chain]) for (const pt of ['all', ptypeOf(r.item)]) { const g = group(c, s.area, pt); (g.b[r.brand] || (g.b[r.brand] = new Set())).add(id); }
     }
     return [...acc.values()].map((g) => {
       const n = g.shops.size, cov = (b) => (n && g.b[b] ? g.b[b].size / n : 0);
       const best = ['Samsung', 'Xiaomi', 'Vivo', 'Honor'].reduce((a, b) => (cov(b) > cov(a) ? b : a));
-      return { chain: g.chain, area: g.area, shops: n, cov_oppo: cov('OPPO'), cov_samsung: cov('Samsung'), cov_xiaomi: cov('Xiaomi'), cov_vivo: cov('Vivo'), cov_honor: cov('Honor'),
+      return { chain: g.chain, area: g.area, ptype: g.ptype, shops: n, cov_oppo: cov('OPPO'), cov_samsung: cov('Samsung'), cov_xiaomi: cov('Xiaomi'), cov_vivo: cov('Vivo'), cov_honor: cov('Honor'),
         best_rival: best, best_rival_cov: cov(best), oppo_vs_best: cov('OPPO') - cov(best) };
     });
   },
@@ -411,22 +421,24 @@ dash.calc('area_matrix', {
 
 dash.calc('by_chain', {
   title: 'Độ phủ demo theo chuỗi',
-  description: 'Mỗi chuỗi, theo khu vực (all = tất cả): số cửa hàng đã check, số cửa hàng có demo và độ phủ của từng hãng.',
+  description: 'Mỗi chuỗi, theo khu vực và loại sản phẩm (all = tất cả): số cửa hàng đã check, số cửa hàng có demo và độ phủ của từng hãng.',
   inputs: ['shops', 'items'],
   fn: (shops, items) => {
+    const PT = ['all', 'Phone', 'Tablet', 'Audio', 'Watch', 'Other'];
+    const ptypeOf = (x) => (/^Bubble$/i.test(x.trim()) ? 'Other' : /\bTab\b|\bPad\b/.test(x) ? 'Tablet' : /Buds?\d*|Enco|\bAir\d/.test(x) ? 'Audio' : /Watch|Band|\bFit\d/.test(x) ? 'Watch' : 'Phone');
     const info = new Map(shops.map((s) => [String(s.shop_id), s]));
     const acc = new Map();
-    const group = (area, chain) => { const k = area + '|' + chain; if (!acc.has(k)) acc.set(k, { area, chain, shops: new Set(), b: {} }); return acc.get(k); };
-    for (const s of shops) for (const a of ['all', s.area]) group(a, s.chain).shops.add(String(s.shop_id));
+    const group = (area, chain, ptype) => { const k = area + '|' + chain + '|' + ptype; if (!acc.has(k)) acc.set(k, { area, chain, ptype, shops: new Set(), b: {} }); return acc.get(k); };
+    for (const s of shops) for (const a of ['all', s.area]) for (const pt of PT) group(a, s.chain, pt).shops.add(String(s.shop_id));
     for (const r of items) {
       const id = String(r.shop_id), s = info.get(id);
       if (!s || r.category !== 'Demo' || !(Number(r.qty) > 0)) continue;
-      for (const a of ['all', s.area]) { const g = group(a, s.chain); (g.b[r.brand] || (g.b[r.brand] = new Set())).add(id); }
+      for (const a of ['all', s.area]) for (const pt of ['all', ptypeOf(r.item)]) { const g = group(a, s.chain, pt); (g.b[r.brand] || (g.b[r.brand] = new Set())).add(id); }
     }
     const out = [];
     for (const g of acc.values()) for (const brand of ['OPPO', 'Samsung', 'Xiaomi', 'Vivo', 'Honor']) {
       const n = g.shops.size, d = g.b[brand] ? g.b[brand].size : 0;
-      out.push({ area: g.area, chain: g.chain, brand, shops: n, demo_shops: d, coverage: n ? d / n : 0 });
+      out.push({ area: g.area, chain: g.chain, ptype: g.ptype, brand, shops: n, demo_shops: d, coverage: n ? d / n : 0 });
     }
     return out;
   },
@@ -434,27 +446,29 @@ dash.calc('by_chain', {
 
 dash.calc('top_models', {
   title: 'Top model demo theo hãng',
-  description: '15 model demo của mỗi hãng có mặt ở nhiều cửa hàng nhất, theo khu vực và chuỗi (all = tất cả), kèm số máy.',
+  description: '15 model demo của mỗi hãng có mặt ở nhiều cửa hàng nhất, theo khu vực, chuỗi và loại sản phẩm (all = tất cả), kèm số máy.',
   inputs: ['shops', 'items'],
   fn: (shops, items) => {
+    const PT = ['all', 'Phone', 'Tablet', 'Audio', 'Watch', 'Other'];
+    const ptypeOf = (x) => (/^Bubble$/i.test(x.trim()) ? 'Other' : /\bTab\b|\bPad\b/.test(x) ? 'Tablet' : /Buds?\d*|Enco|\bAir\d/.test(x) ? 'Audio' : /Watch|Band|\bFit\d/.test(x) ? 'Watch' : 'Phone');
     const info = new Map(shops.map((s) => [String(s.shop_id), s]));
     const keys = (s) => [['all', 'all'], [s.area, 'all'], ['all', s.chain], [s.area, s.chain]];
     const acc = new Map();
     for (const r of items) {
       const id = String(r.shop_id), s = info.get(id), q = Number(r.qty);
       if (!s || r.category !== 'Demo' || !(q > 0)) continue;
-      for (const [area, chain] of keys(s)) {
-        const k = area + '|' + chain + '|' + r.brand;
+      for (const [area, chain] of keys(s)) for (const ptype of ['all', ptypeOf(r.item)]) {
+        const k = area + '|' + chain + '|' + r.brand + '|' + ptype;
         if (!acc.has(k)) acc.set(k, new Map());
         const m = acc.get(k);
-        const v = m.get(r.item) || { area, chain, brand: r.brand, model: r.item, ids: new Set(), units: 0 };
+        const v = m.get(r.item) || { area, chain, ptype, brand: r.brand, model: r.item, ids: new Set(), units: 0 };
         v.ids.add(id); v.units += q; m.set(r.item, v);
       }
     }
     const out = [];
     for (const m of acc.values()) {
       [...m.values()].sort((a, b) => b.ids.size - a.ids.size || b.units - a.units).slice(0, 15)
-        .forEach((v) => out.push({ area: v.area, chain: v.chain, brand: v.brand, model: v.model, shops: v.ids.size, units: v.units }));
+        .forEach((v) => out.push({ area: v.area, chain: v.chain, ptype: v.ptype, brand: v.brand, model: v.model, shops: v.ids.size, units: v.units }));
     }
     return out;
   },
@@ -491,41 +505,61 @@ dash.calc('brand_items', {
 
 dash.calc('shop_compare', {
   title: 'So sánh các hãng tại từng cửa hàng',
-  description: 'Mỗi cửa hàng × hãng: số máy demo, chênh lệch so với OPPO, số model, danh sách model demo, hạng mục đầu tư và POSM (×n = số lượng).',
+  description: 'Mỗi cửa hàng × nhóm (Tổng demo, Phone, Tablet, Audio, Watch, Other, Đầu tư, POSM): với từng hãng, u_<hãng> là số máy demo (hoặc số lượng hạng mục với Đầu tư/POSM) và l_<hãng> là danh sách (×n = số lượng).',
   inputs: ['shops', 'items'],
   fn: (shops, items) => {
     const brands = ['OPPO', 'Samsung', 'Xiaomi', 'Vivo', 'Honor'];
+    const kinds = ['Tổng demo', 'Phone', 'Tablet', 'Audio', 'Watch', 'Other', 'Đầu tư', 'POSM'];
+    const PT = ['all', 'Phone', 'Tablet', 'Audio', 'Watch', 'Other'];
+    const ptypeOf = (x) => (/^Bubble$/i.test(x.trim()) ? 'Other' : /\bTab\b|\bPad\b/.test(x) ? 'Tablet' : /Buds?\d*|Enco|\bAir\d/.test(x) ? 'Audio' : /Watch|Band|\bFit\d/.test(x) ? 'Watch' : 'Phone');
     const m = new Map();
-    for (const s of shops) for (const brand of brands) m.set(String(s.shop_id) + '|' + brand, { shop_id: String(s.shop_id), brand, units: 0, models: new Map(), invest: new Map(), posm: new Map() });
+    for (const s of shops) for (const kind of kinds) m.set(String(s.shop_id) + '|' + kind, { shop_id: String(s.shop_id), kind, b: {} });
+    const add = (id, kind, brand, item, q) => {
+      const v = m.get(id + '|' + kind); if (!v) return;
+      const x = v.b[brand] || (v.b[brand] = { u: 0, l: new Map() });
+      x.u += q; x.l.set(item, (x.l.get(item) || 0) + q);
+    };
     for (const r of items) {
-      const q = Number(r.qty), v = m.get(String(r.shop_id) + '|' + r.brand);
-      if (!v || !(q > 0)) continue;
-      const t = r.category === 'Demo' ? v.models : r.category === 'POSM' ? v.posm : v.invest;
-      t.set(r.item, (t.get(r.item) || 0) + q);
-      if (r.category === 'Demo') v.units += q;
+      const q = Number(r.qty), id = String(r.shop_id);
+      if (!(q > 0)) continue;
+      if (r.category === 'Demo') { add(id, 'Tổng demo', r.brand, r.item, q); add(id, ptypeOf(r.item), r.brand, r.item, q); }
+      else add(id, r.category === 'POSM' ? 'POSM' : 'Đầu tư', r.brand, r.item, q);
     }
     const list = (mp) => [...mp].sort((a, b) => b[1] - a[1]).map(([k, n]) => (n > 1 ? k + ' ×' + n : k)).join(', ');
-    return [...m.values()].map((v) => ({ shop_id: v.shop_id, brand: v.brand, demo_units: v.units,
-      demo_vs_oppo: v.units - m.get(v.shop_id + '|OPPO').units, demo_models: v.models.size,
-      models: list(v.models), invest: list(v.invest), posm: list(v.posm) }));
+    return [...m.values()].map((v) => {
+      const row = { shop_id: v.shop_id, kind: v.kind };
+      for (const b of brands) { const x = v.b[b], k = b.toLowerCase(); row['u_' + k] = x ? x.u : 0; row['l_' + k] = x ? list(x.l) : ''; }
+      return row;
+    });
   },
 });
 
 dash.calc('shop_matrix', {
   title: 'Demo theo từng cửa hàng',
-  description: 'Một dòng mỗi cửa hàng: số máy demo của từng hãng, tổng máy demo đối thủ, các hạng mục đầu tư của đối thủ và các hãng có ghi nhận tại cửa hàng.',
+  description: 'Một dòng mỗi cửa hàng × loại sản phẩm (ptype, all = tất cả): số máy demo của từng hãng, tổng máy demo đối thủ, các hạng mục đầu tư của đối thủ và các hãng có ghi nhận tại cửa hàng.',
   inputs: ['shops', 'items'],
   fn: (shops, items) => {
-    const m = new Map(shops.map((s) => [String(s.shop_id), { shop_id: String(s.shop_id), shop_name: s.shop_name, chain: s.chain, area: s.area, checker: s.checker, checked_at: s.checked_at,
-      demo_oppo: 0, demo_samsung: 0, demo_xiaomi: 0, demo_vivo: 0, demo_honor: 0, rival_demo: 0, inv: {}, seen: new Set() }]));
+    const PT = ['all', 'Phone', 'Tablet', 'Audio', 'Watch', 'Other'];
+    const ptypeOf = (x) => (/^Bubble$/i.test(x.trim()) ? 'Other' : /\bTab\b|\bPad\b/.test(x) ? 'Tablet' : /Buds?\d*|Enco|\bAir\d/.test(x) ? 'Audio' : /Watch|Band|\bFit\d/.test(x) ? 'Watch' : 'Phone');
+    const m = new Map(shops.map((s) => [String(s.shop_id), { s, d: {}, inv: {}, seen: new Set() }]));
     for (const r of items) {
-      const s = m.get(String(r.shop_id)), q = Number(r.qty);
-      if (!s || !(q > 0)) continue;
-      s.seen.add(r.brand);
-      if (r.category === 'Demo') { s['demo_' + r.brand.toLowerCase()] += q; if (r.brand !== 'OPPO') s.rival_demo += q; }
-      else if (r.category === 'Đầu tư đối thủ') (s.inv[r.brand] || (s.inv[r.brand] = [])).push(r.item);
+      const v = m.get(String(r.shop_id)), q = Number(r.qty);
+      if (!v || !(q > 0)) continue;
+      v.seen.add(r.brand);
+      if (r.category === 'Demo') for (const pt of ['all', ptypeOf(r.item)]) { const d = v.d[pt] || (v.d[pt] = {}); d[r.brand] = (d[r.brand] || 0) + q; }
+      else if (r.category === 'Đầu tư đối thủ') (v.inv[r.brand] || (v.inv[r.brand] = [])).push(r.item);
     }
-    return [...m.values()].map(({ inv, seen, ...s }) => ({ ...s, brands: [...seen].join(', '), rival_invest: Object.entries(inv).map(([b, list]) => b + ': ' + list.join(', ')).join(' · ') }));
+    const out = [];
+    for (const { s, d, inv, seen } of m.values()) {
+      const rival_invest = Object.entries(inv).map(([b, l]) => b + ': ' + l.join(', ')).join(' · ');
+      for (const pt of PT) {
+        const x = d[pt] || {}, g = (b) => x[b] || 0;
+        out.push({ shop_id: String(s.shop_id), ptype: pt, shop_name: s.shop_name, chain: s.chain, area: s.area, checker: s.checker, checked_at: s.checked_at,
+          demo_oppo: g('OPPO'), demo_samsung: g('Samsung'), demo_xiaomi: g('Xiaomi'), demo_vivo: g('Vivo'), demo_honor: g('Honor'),
+          rival_demo: g('Samsung') + g('Xiaomi') + g('Vivo') + g('Honor'), brands: [...seen].join(', '), rival_invest });
+      }
+    }
+    return out;
   },
 });
 })();</script>
@@ -556,15 +590,16 @@ dash.draw('f_brand', (sel) => {
   sel.onchange = () => dash.setParams({ brand: sel.value });
 });
 
+document.querySelectorAll('.td-ptype').forEach((sel) => sel.addEventListener('change', () => dash.setParams({ ptype: sel.value })));
 document.querySelectorAll('.td-reset').forEach((b) => b.addEventListener('click', () => dash.resetParams()));
 document.querySelectorAll('.td-chip').forEach((b) => b.addEventListener('click', () => dash.setParams({ shop: null })));
 document.querySelectorAll('.td-search').forEach((inp) => inp.addEventListener('input', () => dash.setParams({ q: inp.value })));
 document.querySelectorAll('.td-stores').forEach((tbl) => tbl.addEventListener('click', (e) => {
-  const tr = e.target.closest('tr[data-key]');
+  const tr = e.target.closest('tr[data-shop]');
   if (!tr) return;
   const cur = TD.scope().shop;
-  dash.setParams({ shop: cur === tr.dataset.key ? null : tr.dataset.key });
-  if (cur !== tr.dataset.key) document.querySelectorAll('#chi-tiet').forEach((el) => el.scrollIntoView({ behavior: 'smooth', block: 'start' }));
+  dash.setParams({ shop: cur === tr.dataset.shop ? null : tr.dataset.shop });
+  if (cur !== tr.dataset.shop) document.querySelectorAll('#chi-tiet').forEach((el) => el.scrollIntoView({ behavior: 'smooth', block: 'start' }));
 }));
 document.querySelectorAll('.td-heat').forEach((tbl) => tbl.addEventListener('click', (e) => {
   const tr = e.target.closest('tr[data-area]');
@@ -576,6 +611,7 @@ dash.onData(() => {
   const s = TD.scope();
   document.querySelectorAll('.td-sw[data-brand]').forEach((sw) => { sw.style.background = TD.color(sw.dataset.brand); });
   document.querySelectorAll('.td-chip').forEach((b) => { b.hidden = !s.shop; });
+  document.querySelectorAll('.td-ptype').forEach((sel) => { sel.value = s.ptype; });
   document.querySelectorAll('[data-tile-brand]').forEach((c) => c.classList.toggle('td-dim', s.brand !== 'all' && c.dataset.tileBrand !== s.brand));
   document.querySelectorAll('.td-detail-box').forEach((b) => { b.hidden = !s.shop; });
   document.querySelectorAll('.td-detail-hint').forEach((b) => { b.hidden = !!s.shop; });
@@ -587,9 +623,9 @@ dash.onData(() => {
 const kpiRow = (brand) => {
   const d = dash.data('kpi'); if (d.status !== 'ok') return null;
   const s = TD.scope();
-  return d.data.find((r) => r.area === s.area && r.chain === s.chain && r.brand === brand) || null;
+  return d.data.find((r) => r.area === s.area && r.chain === s.chain && r.ptype === s.ptype && r.brand === brand) || null;
 };
-const kpiWhere = (brand) => { const s = TD.scope(); return `area=${TD.enc(s.area)}&chain=${TD.enc(s.chain)}&brand=${TD.enc(brand)}`; };
+const kpiWhere = (brand) => { const s = TD.scope(); return `area=${TD.enc(s.area)}&chain=${TD.enc(s.chain)}&ptype=${TD.enc(s.ptype)}&brand=${TD.enc(brand)}`; };
 const fillKpi = (el, brand, field, fmt) => {
   el.classList.toggle('dash-skeleton', dash.data('kpi').status === 'loading');
   el.setAttribute('data-where', kpiWhere(brand));
@@ -620,11 +656,11 @@ dash.draw('area_body', (tb) => {
   const d = dash.data('area_matrix');
   if (d.status !== 'ok') return;
   const s = TD.scope();
-  const rows = d.data.filter((r) => r.chain === s.chain && r.shops > 0).sort((a, b) => b.shops - a.shops);
+  const rows = d.data.filter((r) => r.chain === s.chain && r.ptype === s.ptype && r.shops > 0).sort((a, b) => b.shops - a.shops);
   const cols = [['cov_oppo', 'OPPO'], ['cov_samsung', 'Samsung'], ['cov_xiaomi', 'Xiaomi'], ['cov_vivo', 'Vivo'], ['cov_honor', 'Honor']];
   for (const r of rows) {
     const tr = document.createElement('tr');
-    tr.dataset.key = TD.enc(r.chain) + ',' + TD.enc(r.area);
+    tr.dataset.key = TD.enc(r.chain) + ',' + TD.enc(r.area) + ',' + TD.enc(r.ptype);
     tr.dataset.area = r.area;
     if (s.area === r.area) tr.className = 'is-sel';
     const a = document.createElement('td'); a.className = 'td-store-name'; a.textContent = r.area; tr.appendChild(a);
@@ -648,7 +684,7 @@ const MIN_SHOPS = 20;
 const areaRows = () => {
   const d = dash.data('area_matrix'); if (d.status !== 'ok') return null;
   const s = TD.scope();
-  return d.data.filter((r) => r.chain === s.chain && (s.area === 'all' || r.area === s.area) && r.shops >= (s.area === 'all' ? MIN_SHOPS : 1));
+  return d.data.filter((r) => r.chain === s.chain && r.ptype === s.ptype && (s.area === 'all' || r.area === s.area) && r.shops >= (s.area === 'all' ? MIN_SHOPS : 1));
 };
 const areaList = (el, rows) => rows.forEach((r, i) => {
   el.append(i ? '; ' : ' ', B(r.area), ` (OPPO ${TD.pct(r.cov_oppo)} – ${r.best_rival} ${TD.pct(r.best_rival_cov)}, `, S(d3.format('+.1%')(r.oppo_vs_best), r.oppo_vs_best < 0 ? 'td-neg' : 'td-pos'), ')');
@@ -678,7 +714,7 @@ dash.draw('ins_win', (el) => {
 dash.draw('ins_model', (el) => {
   const d = dash.data('top_models'); if (d.status !== 'ok') { el.textContent = '—'; return; }
   const s = TD.scope();
-  const rows = d.data.filter((r) => r.area === s.area && r.chain === s.chain).sort((a, b) => b.shops - a.shops || b.units - a.units);
+  const rows = d.data.filter((r) => r.area === s.area && r.chain === s.chain && r.ptype === s.ptype).sort((a, b) => b.shops - a.shops || b.units - a.units);
   const rv = rows.find((r) => r.brand !== 'OPPO'), op = rows.find((r) => r.brand === 'OPPO');
   if (!rv) { el.textContent = '—'; return; }
   el.replaceChildren('Model đối thủ được bày rộng nhất là ', B(rv.model), ` (${rv.brand}) tại `, B(TD.num(rv.shops)), ' cửa hàng');
@@ -699,7 +735,7 @@ dash.draw('ch_chain', (el) => {
   const data = TD.begin(el, 'by_chain');
   if (!data) return;
   const s = TD.scope();
-  const rows = data.filter((r) => r.area === s.area && r.shops > 0);
+  const rows = data.filter((r) => r.area === s.area && r.ptype === s.ptype && r.shops > 0);
   const shopsBy = new Map(rows.map((r) => [r.chain, r.shops]));
   const chains = [...shopsBy.keys()].sort((a, b) => shopsBy.get(b) - shopsBy.get(a));
   const brands = s.brand !== 'all' ? [s.brand] : TD.BRANDS.filter((b) => rows.some((r) => r.brand === b && r.demo_shops > 0));
@@ -773,7 +809,7 @@ dash.draw('ch_models', (el) => {
   const data = TD.begin(el, 'top_models');
   if (!data) return;
   const s = TD.scope();
-  const rows = data.filter((r) => r.area === s.area && r.chain === s.chain && (s.brand === 'all' ? r.brand !== 'OPPO' : r.brand === s.brand)).sort((a, b) => b.shops - a.shops || b.units - a.units).slice(0, 12);
+  const rows = data.filter((r) => r.area === s.area && r.chain === s.chain && r.ptype === s.ptype && (s.brand === 'all' ? r.brand !== 'OPPO' : r.brand === s.brand)).sort((a, b) => b.shops - a.shops || b.units - a.units).slice(0, 12);
   rankBars(el, rows, (r) => r.model, (r) => r.shops, (v) => TD.num(v) + ' CH',
     (r) => [{ color: TD.color(r.brand), name: r.brand, value: '' }, { name: 'Số cửa hàng', value: TD.num(r.shops) }, { name: 'Số máy demo', value: TD.num(r.units) }]);
 });
@@ -796,11 +832,11 @@ dash.draw('stores_body', (tb) => {
   const s = TD.scope();
   const q = s.q.trim().toLowerCase();
   const key = s.brand === 'all' ? null : 'demo_' + s.brand.toLowerCase();
-  const rows = d.status === 'ok' ? d.data.filter((r) => TD.inScope(r, s) && (!key || r.brands.split(', ').includes(s.brand)) && (!q || [r.shop_name, r.shop_id, r.checker, r.area, r.rival_invest].join(' ').toLowerCase().includes(q))) : [];
+  const rows = d.status === 'ok' ? d.data.filter((r) => r.ptype === s.ptype && TD.inScope(r, s) && (!key || r.brands.split(', ').includes(s.brand)) && (!q || [r.shop_name, r.shop_id, r.checker, r.area, r.rival_invest].join(' ').toLowerCase().includes(q))) : [];
   rows.sort((a, b) => (key ? (b[key] || 0) - (a[key] || 0) : 0) || b.rival_demo - a.rival_demo || b.demo_oppo - a.demo_oppo);
   document.querySelectorAll('.td-stores-empty').forEach((p) => { p.hidden = !(d.status === 'ok' && rows.length === 0); });
   for (const r of rows.slice(0, window.TD_CAP || 200)) {
-    const tr = document.createElement('tr'); tr.dataset.key = r.shop_id;
+    const tr = document.createElement('tr'); tr.dataset.key = TD.enc(r.shop_id) + ',' + TD.enc(r.ptype); tr.dataset.shop = r.shop_id;
     if (s.shop === r.shop_id) tr.className = 'is-sel';
     const cells = [[r.shop_name, 'td-store-name td-models'], [r.area, 'td-hide-narrow'], [TD.num(r.demo_oppo), 'td-num'], [TD.num(r.demo_samsung), 'td-num'], [TD.num(r.demo_xiaomi), 'td-num'], [TD.num(r.demo_vivo), 'td-num'], [TD.num(r.demo_honor), 'td-num'], [r.rival_invest, 'td-models td-hide-narrow'], [r.checker, 'td-hide-narrow'], [TD.day(r.checked_at), 'td-hide-narrow']];
     for (const [v, c] of cells) { const td = document.createElement('td'); td.className = c; td.textContent = v; tr.appendChild(td); }
@@ -811,8 +847,8 @@ dash.draw('stores_body', (tb) => {
 dash.draw('sel_shop', (el) => {
   const d = dash.data('shop_matrix');
   const s = TD.scope();
-  const r = d.status === 'ok' && s.shop ? d.data.find((x) => x.shop_id === s.shop) : null;
-  el.setAttribute('data-where', 'shop_id=' + TD.enc(s.shop || ''));
+  const r = d.status === 'ok' && s.shop ? d.data.find((x) => x.shop_id === s.shop && x.ptype === 'all') : null;
+  el.setAttribute('data-where', 'shop_id=' + TD.enc(s.shop || '') + '&ptype=all');
   el.textContent = r ? r.shop_name : '—';
 });
 
@@ -821,19 +857,28 @@ dash.draw('detail_body', (tb) => {
   const d = dash.data('shop_compare');
   const s = TD.scope();
   if (d.status !== 'ok' || !s.shop) return;
-  const rows = d.data.filter((r) => r.shop_id === s.shop).sort((a, b) => TD.BRANDS.indexOf(a.brand) - TD.BRANDS.indexOf(b.brand));
-  const max = Math.max(1, ...rows.map((r) => r.demo_units));
+  const KINDS = ['Tổng demo', 'Phone', 'Tablet', 'Audio', 'Watch', 'Other', 'Đầu tư', 'POSM'];
+  const rows = d.data.filter((r) => r.shop_id === s.shop).sort((a, b) => KINDS.indexOf(a.kind) - KINDS.indexOf(b.kind));
   for (const r of rows) {
-    const tr = document.createElement('tr'); tr.dataset.key = TD.enc(r.shop_id) + ',' + TD.enc(r.brand);
-    if (s.brand !== 'all' && s.brand !== r.brand) tr.className = 'td-dim';
-    const td = (txt, cls) => { const c = document.createElement('td'); if (cls) c.className = cls; if (txt != null) c.textContent = txt; tr.appendChild(c); return c; };
-    const h = td(null, 'td-store-name'); const sw = document.createElement('span'); sw.className = 'td-sw'; sw.style.background = TD.color(r.brand); sw.style.marginRight = '6px'; h.append(sw, r.brand);
-    const u = td(null, 'td-num'); const box = document.createElement('div'); box.className = 'td-bar-cell';
-    const bar = document.createElement('span'); bar.className = 'td-mini'; bar.style.width = (r.demo_units / max) * 5 + 'rem'; bar.style.background = TD.color(r.brand);
-    const n = document.createElement('span'); n.textContent = TD.num(r.demo_units); box.append(bar, n); u.appendChild(box);
-    td(r.brand === 'OPPO' ? '' : d3.format('+,')(r.demo_vs_oppo), r.brand === 'OPPO' ? 'td-num' : 'td-num ' + (r.demo_vs_oppo > 0 ? 'td-neg' : r.demo_vs_oppo < 0 ? 'td-pos' : ''));
-    td(TD.num(r.demo_models), 'td-num');
-    td(r.models || '—', 'td-list'); td(r.invest || '—', 'td-list'); td(r.posm || '—', 'td-list');
+    const demo = KINDS.indexOf(r.kind) < 6;
+    const tr = document.createElement('tr'); tr.dataset.key = TD.enc(r.shop_id) + ',' + TD.enc(r.kind);
+    if (r.kind === 'Tổng demo') tr.className = 'td-total';
+    if (s.ptype !== 'all' && r.kind === s.ptype) tr.className = 'td-hl';
+    const h = document.createElement('td'); h.className = 'td-store-name'; h.textContent = r.kind; tr.appendChild(h);
+    const max = Math.max(1, ...TD.BRANDS.map((b) => r['u_' + b.toLowerCase()]));
+    for (const b of TD.BRANDS) {
+      const k = b.toLowerCase(), u = r['u_' + k], c = document.createElement('td');
+      c.className = 'td-cell' + (s.brand !== 'all' && s.brand !== b ? ' td-dim' : '');
+      if (!u) { c.textContent = '—'; c.style.color = 'var(--color-fg-muted)'; tr.appendChild(c); continue; }
+      const top = document.createElement('div'); top.className = 'td-cell-top';
+      const bar = document.createElement('span'); bar.className = 'td-mini'; bar.style.width = (u / max) * 3 + 'rem'; bar.style.background = TD.color(b);
+      const n = document.createElement('b'); n.textContent = TD.num(u) + (demo ? ' máy' : '');
+      top.append(bar, n);
+      if (demo && b !== 'OPPO') { const diff = u - r.u_oppo; if (diff) { const df = document.createElement('span'); df.className = diff > 0 ? 'td-neg' : 'td-pos'; df.textContent = d3.format('+,')(diff); top.append(df); } }
+      c.appendChild(top);
+      if (r.kind !== 'Tổng demo') { const l = document.createElement('div'); l.className = 'td-cell-list'; l.textContent = r['l_' + k]; c.appendChild(l); }
+      tr.appendChild(c);
+    }
     tb.appendChild(tr);
   }
 });
