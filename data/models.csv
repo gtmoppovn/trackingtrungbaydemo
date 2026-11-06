@@ -1,0 +1,138 @@
+brand,ptype,item,list_price,promo_price,ref_version,segment,note
+OPPO,Phone,Reno 16 F,14990000,14190000,Reno16F 5G 8GB/128GB,10-15M,
+OPPO,Phone,A6,9990000,9490000,A6 6GB/128GB,7-10M,
+OPPO,Phone,A6x,4990000,4890000,A6x 4GB/64GB,3-5M,
+OPPO,Phone,A6c,4690000,4690000,A6c 4GB/64GB,3-5M,
+OPPO,Phone,Reno 15 F,12990000,12990000,Reno15 F 5G 12GB/256GB,10-15M,
+OPPO,Phone,Reno 16,18990000,16710000,Reno16 5G 8GB/256GB,15-20M,
+OPPO,Phone,A6 Pro,9990000,9790000,A6 Pro 8GB/256GB,7-10M,Bản 4G; bản 5G 8/256 niêm yết 10.990.000
+OPPO,Phone,Find X9s,24990000,24990000,Find X9s 12GB/256GB,20-30M,Bản 12/512 niêm yết 26.990.000; Giá cũ trong file: 26.990.000
+OPPO,Phone,A6t Pro,10990000,10990000,A6t Pro 8GB/128GB,10-15M,
+OPPO,Phone,A6t,4990000,4990000,A6t 4GB/64GB,3-5M,
+OPPO,Phone,Reno 15 Pro,18990000,18610000,Reno15 Pro 5G 12GB/256GB,15-20M,
+OPPO,Phone,Reno 16 Pro,25990000,22870000,Reno16 Pro 5G 12GB/256GB,20-30M,
+OPPO,Phone,Find X9 Ultra,49990000,49990000,Find X9 Ultra 12GB/512GB,Above 30M,
+OPPO,Phone,Find N6,64990000,64990000,Find N6 5G 16GB/512GB,Above 30M,
+OPPO,Phone,Find X9,,,Find X9 5G 12GB/256GB,Chưa có giá,"TGDD: Ngưng kinh doanh, không còn giá"
+OPPO,Tablet,Pad SE,6990000,6640000,Pad SE WiFi 4GB/128GB,5-7M,Bản 4G 4/128 niêm yết 7.990.000
+OPPO,Tablet,Pad 5,13990000,13990000,Pad 5 8GB/256GB,10-15M,
+OPPO,Audio,Enco Bud3,890000,790000,OPPO Enco Buds 3 ETEG1,≤ 3M,
+OPPO,Audio,Enco Bud3 Pro,970000,870000,OPPO Enco Buds 3 Pro ETEK1,≤ 3M,
+OPPO,Audio,Enco Air5,1590000,1390000,OPPO Enco Air 5,≤ 3M,
+OPPO,Audio,Enco Clip2,4990000,3990000,OPPO Enco Clip2 ETEN1,3-5M,
+OPPO,Audio,Enco Air5s,2290000,2000000,OPPO Enco Air 5s,≤ 3M,
+OPPO,Audio,Enco Air5 Pro,2290000,2090000,OPPO Enco Air 5 Pro ETEL1,≤ 3M,
+OPPO,Watch,Watch S,,,,Chưa có giá,Không tìm thấy trên TGDD
+OPPO,Watch,Watch X3,,,,Chưa có giá,Không tìm thấy trên TGDD
+OPPO,Other,Bubble,,,,Chưa có giá,
+Samsung,Phone,Galaxy A57 5G,13490000,11000000,Galaxy A57 5G 8GB/128GB,10-15M,
+Samsung,Phone,Galaxy A37 5G,11190000,9200000,Galaxy A37 5G 6GB/128GB,10-15M,Giá cũ trong file: 11.790.000
+Samsung,Phone,Galaxy A27 5G,9090000,7600000,Galaxy A27 6GB/128GB,7-10M,"TGDD chỉ có 1 dòng ""Galaxy A27"" (không ghi 5G)"
+Samsung,Phone,Galaxy A17 5G,7990000,6700000,Galaxy A17 5G 8GB/256GB,7-10M,Bản 8/128 niêm yết 8.790.000
+Samsung,Phone,Galaxy A07 5G,5890000,4700000,Galaxy A07 5G 4GB/128GB,5-7M,Giá cũ trong file: 6.990.000
+Samsung,Phone,Galaxy S26 Ultra,40990000,30600000,Galaxy S26 Ultra 5G 12GB/256GB,Above 30M,
+Samsung,Phone,Galaxy S26 FE,18990000,15710000,Galaxy S26 FE 5G 8GB/128GB,15-20M,
+Samsung,Phone,Galaxy S26,29990000,20500000,Galaxy S26 5G 12GB/256GB,20-30M,
+Samsung,Phone,Galaxy Z Fold8,46990000,40250000,Galaxy Z Fold8 12GB/256GB,Above 30M,
+Samsung,Phone,Galaxy A07,3890000,3290000,Galaxy A07 4GB/64GB,3-5M,
+Samsung,Phone,Galaxy S26+,33990000,24200000,Galaxy S26+ 5G 12GB/256GB,Above 30M,
+Samsung,Phone,Galaxy Z Fold8 Ultra,52990000,45590000,Galaxy Z Fold8 Ultra 12GB/256GB,Above 30M,
+Samsung,Phone,Galaxy A17,5690000,4490000,Galaxy A17 4GB/128GB,5-7M,
+Samsung,Phone,Galaxy S25,22580000,16790000,Galaxy S25 5G 12GB/256GB,20-30M,
+Samsung,Phone,Galaxy Z Flip8,31990000,27100000,Galaxy Z Flip8 12GB/256GB,Above 30M,
+Samsung,Phone,Galaxy S25 Ultra,33380000,26490000,Galaxy S25 Ultra 5G 12GB/256GB,Above 30M,
+Samsung,Phone,Galaxy S25 FE,16690000,14350000,Galaxy S25 FE 5G 8GB/128GB,15-20M,
+Samsung,Phone,Galaxy Z Flip7 FE,22990000,17200000,Galaxy Z Flip7 FE 5G 8GB/128GB,20-30M,
+Samsung,Phone,Galaxy A27,9090000,7600000,Galaxy A27 6GB/128GB,7-10M,Cùng dòng với Galaxy A27 5G trên TGDD
+Samsung,Phone,Galaxy A37,13990000,11300000,Galaxy A37 8GB/256GB,10-15M,Bản 4G (tên TGDD không có 5G)
+Samsung,Phone,Galaxy A57,,,,Chưa có giá,Không tìm thấy trên TGDD (chỉ có A57 5G)
+Samsung,Phone,Galaxy S25+,,,,Chưa có giá,Không tìm thấy trên TGDD
+Samsung,Tablet,Galaxy Tab A11 Wifi,4390000,3700000,Galaxy Tab A11 WiFi 4GB/64GB,3-5M,
+Samsung,Tablet,Galaxy Tab A11+ Wifi,7590000,6450000,Galaxy Tab A11+ WiFi 6GB/128GB,7-10M,
+Samsung,Tablet,Galaxy Tab S10 Lite Wifi,9990000,8590000,Galaxy Tab S10 Lite WiFi 6GB/128GB,7-10M,
+Samsung,Tablet,Galaxy Tab A11 4G,5490000,4600000,Galaxy Tab A11 4G 4GB/64GB,5-7M,
+Samsung,Tablet,Galaxy Tab S11 Wifi,24990000,16980000,Galaxy Tab S11 WiFi 12GB/128GB,20-30M,
+Samsung,Tablet,Galaxy Tab S10 Lite,9990000,8590000,Galaxy Tab S10 Lite WiFi 6GB/128GB,7-10M,Tên model không ghi WiFi/5G – lấy bản rẻ nhất (WiFi); bản 5G 11.490.000
+Samsung,Tablet,Galaxy Tab S10 FE+ Wifi,17490000,13990000,Galaxy Tab S10 FE+ WiFi 8GB/128GB,15-20M,
+Samsung,Tablet,Galaxy Tab S10 FE,13690000,10690000,Galaxy Tab S10 FE WiFi 8GB/128GB,10-15M,Tên model không ghi WiFi/5G – lấy bản rẻ nhất (WiFi); bản 5G 16.190.000
+Samsung,Tablet,Galaxy Tab S10 FE Wifi,13690000,10690000,Galaxy Tab S10 FE WiFi 8GB/128GB,10-15M,
+Samsung,Tablet,Galaxy Tab S10 FE+,17490000,13990000,Galaxy Tab S10 FE+ WiFi 8GB/128GB,15-20M,"Tên model không ghi WiFi/5G – bản 5G đã ngưng kinh doanh, lấy bản WiFi"
+Samsung,Tablet,Galaxy Tab A11+ 5G,8890000,7990000,Galaxy Tab A11+ 5G 6GB/128GB,7-10M,
+Samsung,Tablet,Galaxy Tab S11 Ultra 5G,36490000,26260000,Galaxy Tab S11 Ultra 5G 12GB/256GB,Above 30M,
+Samsung,Tablet,Galaxy Tab S10 Lite 5G,11490000,9800000,Galaxy Tab S10 Lite 5G 6GB/128GB,10-15M,
+Samsung,Tablet,Galaxy Tab S10 FE+ 5G,,,Galaxy Tab S10 FE+ 5G 8GB/128GB,Chưa có giá,TGDD: Ngưng kinh doanh
+Samsung,Tablet,Galaxy Tab S11 5G,28490000,20420000,Galaxy Tab S11 5G 12GB/128GB,20-30M,
+Samsung,Tablet,Galaxy Tab S10+ Wifi,,,Galaxy Tab S10+ WiFi 12GB/256GB,Chưa có giá,TGDD: Ngưng kinh doanh
+Samsung,Tablet,Galaxy Tab S10+ 5G,30990000,22870000,Galaxy Tab S10+ 5G 12GB/256GB,Above 30M,
+Samsung,Tablet,Galaxy Tab S10 FE 5G,16190000,13100000,Galaxy Tab S10 FE 5G 8GB/128GB,15-20M,
+Samsung,Audio,Galaxy Buds Core,1190000,990000,Galaxy Buds Core R410N,≤ 3M,
+Samsung,Audio,Galaxy Buds4 Pro,6790000,5160000,Galaxy Buds4 Pro R640N,5-7M,
+Samsung,Audio,Galaxy Buds4,4990000,3615000,Galaxy Buds4 R540N,3-5M,
+Samsung,Audio,Galaxy Buds3,3915000,2915000,Galaxy Buds3 R530N,3-5M,
+Samsung,Audio,Galaxy Buds3 FE,2990000,2790000,Galaxy Buds3 FE R420N,≤ 3M,
+Samsung,Audio,Galaxy Buds3 Pro,5390000,3500000,Galaxy Buds3 Pro R630N,5-7M,
+Samsung,Watch,Galaxy Fit3,1370000,1070000,Galaxy Fit3 dây silicone,≤ 3M,
+Samsung,Watch,Galaxy Watch8 Classic,12990000,5990000,Galaxy Watch8 Classic 46mm dây da,10-15M,
+Samsung,Watch,Galaxy Watch9,9990000,7990000,Galaxy Watch9 Bluetooth 40mm,7-10M,TGDD chỉ có Watch9 Bluetooth/LTE – lấy bản Bluetooth
+Samsung,Watch,Galaxy Watch9 Bluetooth,9990000,7990000,Galaxy Watch9 Bluetooth 40mm,7-10M,Bản 44mm niêm yết 10.990.000
+Samsung,Watch,Galaxy Watch8,8990000,3990000,Galaxy Watch8 40mm dây silicone,7-10M,Bản 44mm niêm yết 9.990.000
+Samsung,Watch,Galaxy Watch9 LTE,11490000,9270000,Galaxy Watch9 LTE 40mm,10-15M,Bản 44mm niêm yết 11.990.000
+Samsung,Watch,Galaxy Watch8 Classic LTE,13990000,6990000,Galaxy Watch8 Classic LTE 46mm dây da,10-15M,
+Samsung,Watch,Galaxy Watch Ultra 2,18990000,15990000,Galaxy Watch Ultra 2 LTE 47mm,15-20M,
+Samsung,Watch,Galaxy Watch8 LTE,9990000,4990000,Galaxy Watch8 LTE 40mm dây silicone,7-10M,Bản 44mm niêm yết 10.990.000
+Samsung,Watch,Galaxy Watch Ultra,16690000,10390000,Galaxy Watch Ultra LTE 47mm,15-20M,Bản Ultra (2025) niêm yết 16.990.000
+Samsung,Watch,Galaxy Watch7,8340000,4240000,Galaxy Watch7 44mm dây silicone,7-10M,Bản 40mm đã ngưng kinh doanh
+Xiaomi,Phone,Redmi 17,5990000,4970000,Redmi 17 4G 4GB/128GB,5-7M,Giá cũ trong file: 6.490.000
+Xiaomi,Phone,Redmi A7 Pro,4490000,3800000,Redmi A7 Pro 4GB/64GB,3-5M,
+Xiaomi,Phone,Xiaomi 17T,20090000,14780000,Xiaomi 17T 5G 12GB/256GB,20-30M,
+Xiaomi,Phone,Poco C71,4390000,3400000,Poco C71 4GB/64GB,3-5M,
+Xiaomi,Phone,Redmi 15C,4690000,3790000,Redmi 15C 4GB/128GB,3-5M,
+Xiaomi,Phone,Redmi Note 17,6990000,6050000,Redmi Note 17 4G 4GB/128GB,5-7M,
+Xiaomi,Phone,Redmi Note 17 Pro 5G,11490000,9560000,Redmi Note 17 Pro 5G 6GB/256GB,10-15M,Bản 6/128 (hàng sắp về) niêm yết 10.990.000
+Xiaomi,Phone,Redmi Note 15,6490000,4760000,Redmi Note 15 8GB/128GB,5-7M,
+Xiaomi,Phone,Redmi Note 17 5G,8990000,7510000,Redmi Note 17 5G 6GB/128GB,7-10M,
+Xiaomi,Phone,Redmi Note 15 Pro,8990000,6910000,Redmi Note 15 Pro 8GB/256GB,7-10M,
+Xiaomi,Phone,Redmi Note 15 Pro 5G,10490000,8080000,Redmi Note 15 Pro 5G 8GB/256GB,10-15M,
+Xiaomi,Phone,Redmi Note 17 Pro Max 5G,15990000,14670000,Redmi Note 17 Pro Max 8GB/256GB,15-20M,
+Xiaomi,Phone,Redmi A7,3890000,3310000,Redmi A7 3GB/64GB,3-5M,
+Xiaomi,Phone,Redmi Note 15 5G,8290000,6320000,Redmi Note 15 5G 8GB/256GB,7-10M,
+Xiaomi,Phone,Xiaomi 17T Pro,23990000,18510000,Xiaomi 17T Pro 5G 12GB/256GB,20-30M,
+Xiaomi,Phone,Xiaomi 17,26990000,18950000,Xiaomi 17 5G 12GB/256GB,20-30M,
+Xiaomi,Phone,Xiaomi 17 Ultra,39990000,29890000,Xiaomi 17 Ultra 5G 16GB/512GB,Above 30M,
+Xiaomi,Phone,Redmi 15,,,Redmi 15 (4G),Chưa có giá,TGDD: Ngưng kinh doanh
+Xiaomi,Phone,Poco M8 Pro,,,,Chưa có giá,Không tìm thấy trên TGDD
+Xiaomi,Phone,Redmi Note 15 Pro+ 5G,12990000,9830000,Redmi Note 15 Pro+ 5G 12GB/256GB,10-15M,
+Xiaomi,Phone,Redmi 17 5G,6490000,4960000,Redmi 17 5G 4GB/128GB,5-7M,
+Xiaomi,Phone,Xiaomi 15T,13990000,10110000,Xiaomi 15T 5G 12GB/256GB,10-15M,
+Xiaomi,Phone,POCO M8 Pro 5G,,,,Chưa có giá,Không tìm thấy trên TGDD
+Xiaomi,Phone,Xiaomi 15T Pro,,,Xiaomi 15T Pro 5G,Chưa có giá,TGDD: Ngưng kinh doanh
+Xiaomi,Phone,Xiaomi 15T 5G,13990000,10110000,Xiaomi 15T 5G 12GB/256GB,10-15M,
+Xiaomi,Phone,POCO F9 Ultra 5G,29990000,25390000,POCO F9 Ultra 12GB/256GB,20-30M,
+Xiaomi,Phone,POCO X8 Pro Max,,,,Chưa có giá,Không tìm thấy trên TGDD
+Xiaomi,Phone,POCO C81 Pro,,,,Chưa có giá,Không tìm thấy trên TGDD
+Xiaomi,Phone,POCO F8 Pro,19990000,17090000,POCO F8 Pro 12GB/512GB,15-20M,TGDD: Tạm hết hàng
+Xiaomi,Tablet,Redmi Pad 2 Wifi,6190000,5560000,"Redmi Pad 2 WiFi 4GB/128GB (11"")",5-7M,"Bản 9.7"" WiFi 4/64 niêm yết 4.990.000"
+Xiaomi,Tablet,Xiaomi Pad 8,14490000,12800000,Xiaomi Pad 8 8GB/256GB,10-15M,Bản 8/128 (tạm hết hàng) niêm yết 12.990.000
+Xiaomi,Tablet,Redmi Pad 2 Pro Wifi,9190000,8200000,Redmi Pad 2 Pro WiFi 6GB/128GB,7-10M,
+Xiaomi,Tablet,Redmi Pad 2 4G,6990000,6350000,"Redmi Pad 2 4G 4GB/128GB (11"")",5-7M,"Bản 9.7"" 4G 4/64 niêm yết 5.990.000"
+Xiaomi,Tablet,Redmi Pad 2 Pro,9190000,8200000,Redmi Pad 2 Pro WiFi 6GB/128GB,7-10M,Tên model không ghi WiFi/5G – lấy bản rẻ nhất (WiFi); bản 5G 6/128 10.990.000
+Xiaomi,Tablet,Xiaomi Pad 8 Pro,17990000,16130000,Xiaomi Pad 8 Pro 8GB/256GB,15-20M,Bản 8/128 (tạm hết hàng) niêm yết 16.990.000
+Xiaomi,Audio,Redmi Buds 8,1590000,1290000,Redmi Buds 8,≤ 3M,
+Xiaomi,Audio,Xiaomi Buds 6 Pro,,,,Chưa có giá,Không tìm thấy trên TGDD (chỉ có Xiaomi Buds 6 – 3.690.000; Redmi Buds 6 Pro đã ngưng KD)
+Xiaomi,Audio,Redmi Buds 8 Pro,2490000,1790000,Redmi Buds 8 Pro,≤ 3M,
+Xiaomi,Audio,Redmi Buds 6,1460000,735000,Redmi Buds 6,≤ 3M,
+Xiaomi,Audio,Redmi Buds 8 Lite,850000,700000,Redmi Buds 8 Lite,≤ 3M,
+Xiaomi,Audio,Redmi Buds 8 Active,750000,650000,Redmi Buds 8 Active,≤ 3M,
+Xiaomi,Watch,Xiaomi Smart Band 10,1170000,1170000,Mi Band 10 viền nhôm,≤ 3M,Bản viền gốm niêm yết 1.760.000
+Xiaomi,Watch,Xiaomi Watch 6,3190000,2490000,Redmi Watch 6,3-5M,"TGDD không có ""Xiaomi Watch 6"" – map sang Redmi Watch 6, cần kiểm tra lại"
+Xiaomi,Watch,Xiaomi Watch S5,5290000,4090000,Xiaomi Watch S5 46mm dây cao su Fluoro,5-7M,Bản viền gốm/Carbon niêm yết 5.790.000
+Xiaomi,Watch,Redmi Watch 6 Lite,1990000,1390000,Redmi Watch 6 Lite 48mm,≤ 3M,
+Xiaomi,Watch,Xiaomi Watch 5,9990000,4990000,Xiaomi Watch 5 47mm,7-10M,
+Xiaomi,Watch,Xiaomi Watch S4,4210000,3210000,Xiaomi Watch S4 47mm dây silicone,3-5M,Bản 41mm từ 4.290.000
+Xiaomi,Watch,Redmi Watch 6 Active,1390000,990000,Redmi Watch 6 Active 47mm,≤ 3M,
+Xiaomi,Watch,Redmi Watch 5 Active,880000,780000,Redmi Watch 5 Active 49.1mm,≤ 3M,
+Xiaomi,Watch,Xiaomi Smart Band 10 Pro,2190000,1790000,Mi Band 10 Pro dây TPU,≤ 3M,Bản viền gốm niêm yết 2.690.000
+Xiaomi,Watch,Smart Band 10 Pro,2190000,1790000,Mi Band 10 Pro dây TPU,≤ 3M,Trùng model với Xiaomi Smart Band 10 Pro
+Xiaomi,Watch,Redmi Watch 5 Lite,1370000,1270000,Redmi Watch 5 Lite 48.2mm,≤ 3M,
+Honor,Phone,Honor 600,17990000,16430000,Honor 600 8GB/256GB,15-20M,
+Honor,Phone,Honor Magic V5,,,HONOR Magic V5 5G 16GB/512GB,Chưa có giá,TGDD: Ngưng kinh doanh
